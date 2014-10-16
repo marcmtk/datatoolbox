@@ -1,0 +1,15 @@
+df <- read.csv("hw1_data.csv", header=T)
+str(df)
+head(df, 2)
+tail(df, 2)
+df[47,1]
+sum(is.na(df$Ozone))
+mean(df$Ozone, na.rm=T)
+mean(df[df$Ozone>31 && df$Temp>90,][,2])
+df2 <- subset(df, Ozone>31 & Temp>90)
+head(df2)
+df2
+mean(df2$Solar.R)
+tapply(df$Temp, df$Month, mean)
+tapply(df$Ozone, df$Month, max)
+max(df[df$Month==5,][,1], na.rm=T)

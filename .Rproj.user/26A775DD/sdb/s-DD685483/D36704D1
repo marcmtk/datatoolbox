@@ -1,0 +1,17 @@
+{
+    "contents" : "corr <- function(directory, threshold = 0) {\n  ls <- list.files(directory)\n  dfs <- lapply(ls, function(x) read.csv(paste(directory,\"/\",x, sep=\"\"), header=T))\n  nobs <- sapply(dfs, function(x) sum(complete.cases(x)))\n  df <- do.call(\"rbind\", dfs)\n  good <- threshold < nobs\n  if(sum(good) == 0) return(numeric())\n  goodID <- levels(as.factor(df$ID))[good]\n  df2 <- subset(df, ID %in% goodID)\n  s <- split(df2, df2$ID)\n  corrs <- sapply(s, function(x) cor(x[\"sulfate\"], x[\"nitrate\"], use=\"na.or.complete\"))\n  \n  ## 'directory' is a character vector of length 1 indicating\n  ## the location of the CSV files\n  \n  ## 'threshold' is a numeric vector of length 1 indicating the\n  ## number of completely observed observations (on all\n  ## variables) required to compute the correlation between\n  ## nitrate and sulfate; the default is 0\n  \n  ## Return a numeric vector of correlations\n}\n#cr <- corr(\"specdata\", 150)\n#head(cr)\n## [1] -0.01896 -0.14051 -0.04390 -0.06816 -0.12351 -0.07589\n#summary(cr)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n## -0.2110 -0.0500  0.0946  0.1250  0.2680  0.7630\n#cr <- corr(\"specdata\", 400)\n#head(cr)\n## [1] -0.01896 -0.04390 -0.06816 -0.07589  0.76313 -0.15783\n#summary(cr)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n## -0.1760 -0.0311  0.1000  0.1400  0.2680  0.7630\n#cr <- corr(\"specdata\", 5000)\n#summary(cr)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n## \n#length(cr)\n## [1] 0\n#cr <- corr(\"specdata\")\n#summary(cr)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n## -1.0000 -0.0528  0.1070  0.1370  0.2780  1.0000\n#length(cr)\n## [1] 323",
+    "created" : 1413229566336.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3553083200",
+    "id" : "D36704D1",
+    "lastKnownWriteTime" : 1413233302,
+    "path" : "~/Dropbox/Programmering/R/datatoolbox/R programming, assignment 1/corr.R",
+    "project_path" : "R programming, assignment 1/corr.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
